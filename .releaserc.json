@@ -8,7 +8,13 @@
     { "name": "alpha", "prerelease": true }
   ],
   "plugins": [
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": true,
+        "tarballDir": "dist"
+      }
+    ],
     "@semantic-release/git",
     "@semantic-release/github"
   ]

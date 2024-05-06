@@ -1,4 +1,4 @@
 {
-  "src/**/*.{ts}": ["yarn typecheck"],
+  "src/**/*.ts": ["yarn typecheck"],
   "src/**/*.{js,ts,json}": ["yarn lint:fix", "yarn format:fix"]
 }
