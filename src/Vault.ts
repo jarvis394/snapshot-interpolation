@@ -19,6 +19,11 @@ export class Vault<T extends Snapshot = Snapshot> {
     this.sortBuffer()
   }
 
+  public unsafe_addWithoutSort(snapshot: T) {
+    this.buffer.add(snapshot)
+    this.sortedBuffer = this.buffer.toArray()
+  }
+
   public setMaxSize(newSize: number) {
     this.buffer.resize(newSize)
   }
