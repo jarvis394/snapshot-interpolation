@@ -22,7 +22,6 @@ type State = BaseState<{
 interface Snapshot extends BaseSnapshot<State> {}
 
 const SI = new SnapshotInterpolation<Snapshot>({ vaultSize: 30 })
-const tick = 1000 / 20
 const now = Date.now() - 1000
 let snapshot: Snapshot
 let frame1: number

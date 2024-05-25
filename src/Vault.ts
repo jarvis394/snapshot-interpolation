@@ -3,6 +3,7 @@ import { RingBuffer } from 'ring-buffer-ts'
 
 export class Vault<T extends Snapshot = Snapshot> {
   protected buffer: RingBuffer<T>
+  /** Buffer is sorted in a reverse order for faster lookups */
   protected sortedBuffer: T[] = []
 
   /**
@@ -80,11 +81,37 @@ export class Vault<T extends Snapshot = Snapshot> {
   }
 
   public clear() {
-    return this.buffer.clear()
+    this.buffer.clear()
+    this.sortedBuffer = []
+    return
   }
 
-  public remove(index: number, count?: number | undefined): T[] {
-    return this.buffer.remove(index, count)
+  /**
+   * Removes one or more items form the buffer.
+   * @param index Start index of the item to remove.
+   * @param count The count of items to remove. (default: 1)
+   */
+  public remove(index: number, count: number = 1): T[] {
+    const removedItems = this.buffer.remove(index, count)
+    this.sortBuffer()
+    return removedItems
+  }
+
+  /**
+   * Removes the first item. Like #remove(0).
+   */
+  public removeFirst(): T {
+    const removedItem = this.buffer.removeFirst()
+    this.sortBuffer()
+    return removedItem
+  }
+  /**
+   * Removes the last item. Like #remove(-1).
+   */
+  public removeLast(): T {
+    const removedItem = this.buffer.removeLast()
+    this.sortBuffer()
+    return removedItem
   }
 
   public isEmpty(): boolean {
