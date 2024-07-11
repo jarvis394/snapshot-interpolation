@@ -53,13 +53,21 @@ export class SnapshotInterpolation<T extends Snapshot = Snapshot> {
     return this._timeOffset
   }
 
-  public addSnapshot(snapshot: T) {
+  public updateTimeOffsetBySnapshot(snapshot: T) {
     const timeNow = SnapshotInterpolation.Now()
     const timeSnapshot = snapshot.timestamp
     const timeOffset = timeNow - timeSnapshot
-
     this._timeOffset = timeOffset
+  }
+
+  public addSnapshot(snapshot: T) {
+    this.updateTimeOffsetBySnapshot(snapshot)
     this.vault.add(snapshot)
+  }
+
+  public unsafe_addSnapshotWithoutSort(snapshot: T) {
+    this.updateTimeOffsetBySnapshot(snapshot)
+    this.vault.unsafe_addWithoutSort(snapshot)
   }
 
   public calcInterpolation<D extends keyof T['state']>(
