@@ -68,8 +68,8 @@ export class Vault<T extends Snapshot = Snapshot> {
       : NaN
 
     if (isNaN(newer)) return snapshots.older
-    else if (newer <= older) return snapshots.older
-    else return snapshots.newer
+    else if (newer > older) return snapshots.newer
+    else return snapshots.older
   }
 
   public getByFrame(frame: Frame): T | undefined {
