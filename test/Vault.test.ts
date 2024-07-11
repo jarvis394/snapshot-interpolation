@@ -114,3 +114,28 @@ test('remove last item', () => {
   expect(lastItem).not.toBeUndefined()
   expect(lastItem?.frame).toBe(2)
 })
+
+test('get around timestamp', () => {
+  const vault = new Vault()
+  const now = Date.now()
+  vault.add({
+    frame: 1,
+    timestamp: now,
+    state: {},
+  })
+  vault.add({
+    frame: 2,
+    timestamp: now + 1000,
+    state: {},
+  })
+  vault.add({
+    frame: 3,
+    timestamp: now + 2000,
+    state: {},
+  })
+  const res = vault.getAroundTimestamp(now + 300)
+  expect(res?.older).not.toBeUndefined()
+  expect(res?.newer).not.toBeUndefined()
+  expect(res?.older?.frame).toBe(1)
+  expect(res?.newer?.frame).toBe(2)
+})

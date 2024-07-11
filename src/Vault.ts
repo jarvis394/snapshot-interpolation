@@ -47,8 +47,8 @@ export class Vault<T extends Snapshot = Snapshot> {
     )
 
     return {
-      older: this.sortedBuffer[index],
-      newer: this.sortedBuffer[index + 1],
+      older: this.sortedBuffer[index + 1],
+      newer: this.sortedBuffer[index],
     }
   }
 
